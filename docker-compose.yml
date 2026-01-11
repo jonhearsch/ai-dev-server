@@ -30,5 +30,3 @@ services:
       # Mosh UDP ports
       - "${MOSH_PORT_START:-60000}-${MOSH_PORT_END:-60010}:60000-60010/udp"
     restart: unless-stopped
-    cap_add:
-      - NET_ADMIN
