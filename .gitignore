@@ -1,0 +1,32 @@
+# Environment variables
+.env
+
+# SSH keys - NEVER commit these!
+ssh-keys/
+*.pub
+*.pem
+id_rsa
+id_ed25519
+
+# Config directory (may contain API keys)
+config/
+.config/
+
+# Docker volumes and data
+data/
+workspace/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/

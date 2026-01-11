@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  remote-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        USER_NAME: ${USER_NAME:-jon}
+        USER_UID: ${USER_UID:-1000}
+        USER_GID: ${USER_GID:-1000}
+    image: remote-dev:latest
+    container_name: remote-dev
+    hostname: remote-dev
+    environment:
+      - TZ=${TZ:-America/New_York}
+    volumes:
+      # SSH authorized_keys - mount your public key here
+      - ${SSH_KEYS_PATH:-./ssh-keys/authorized_keys}:/home/${USER_NAME:-jon}/.ssh/authorized_keys:ro
+      # Persistent workspace
+      - ${WORKSPACE_PATH:-/mnt/user/appdata/remote-dev/workspace}:/home/${USER_NAME:-jon}/workspace
+      # Optional: Mount additional Unraid shares
+      # - /mnt/user/documents:/mnt/shares/documents:ro
+      # - /mnt/user/media:/mnt/shares/media:ro
+      # API keys and configs (optional)
+      - ${CONFIG_PATH:-./config}:/home/${USER_NAME:-jon}/.config
+    ports:
+      # SSH
+      - "${SSH_PORT:-2222}:22"
+      # Mosh UDP ports
+      - "${MOSH_PORT_START:-60000}-${MOSH_PORT_END:-60010}:60000-60010/udp"
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
