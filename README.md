@@ -7,7 +7,7 @@ A Docker container for remote development with Claude Code and Gemini CLI, acces
 - Ubuntu 22.04 base
 - SSH server with key-based authentication
 - Mosh support for unreliable connections
-- **Pre-installed Claude Code CLI and Gemini CLI**
+- Easy setup script for Claude Code CLI and Gemini CLI
 - **tmux for persistent sessions**
 - Node.js 20.x pre-installed
 - **Named volume persists entire home directory** (configs, installs, workspace)
@@ -72,9 +72,17 @@ ssh your-unraid-hostname:2222
 mosh --ssh="ssh -p 2222" jon@your-unraid-hostname.ts.net
 ```
 
-## Using AI Tools
+## First-Time Setup
 
-The tools are pre-installed and ready to use:
+After your first connection, run the setup script:
+
+```bash
+bash ~/setup-ai-tools.sh
+```
+
+This installs Claude Code and Gemini CLI. Because of the persistent home volume, you only need to do this once!
+
+## Using AI Tools
 
 ```bash
 # Claude Code
