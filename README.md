@@ -7,9 +7,10 @@ A Docker container for remote development with Claude Code and Gemini CLI, acces
 - Ubuntu 22.04 base
 - SSH server with key-based authentication
 - Mosh support for unreliable connections
-- Easy setup script for Claude Code CLI and Gemini CLI
+- **Pre-installed Claude Code CLI and Gemini CLI**
+- **tmux for persistent sessions**
 - Node.js 20.x pre-installed
-- Persistent workspace
+- **Named volume persists entire home directory** (configs, installs, workspace)
 - Access to Unraid shares
 - Automatic builds via GitHub Actions
 
@@ -71,35 +72,42 @@ ssh your-unraid-hostname:2222
 mosh --ssh="ssh -p 2222" jon@your-unraid-hostname.ts.net
 ```
 
-## First-Time Setup
-
-After connecting for the first time, run the setup script to install AI tools:
-
-```bash
-# Run the setup script
-~/setup-ai-tools.sh
-```
-
-This will install:
-- Claude Code CLI
-- Gemini CLI (via npm)
-
-The script is idempotent - you can run it multiple times safely.
-
 ## Using AI Tools
 
-Once setup is complete:
+The tools are pre-installed and ready to use:
 
 ```bash
 # Claude Code
 claude
 
 # Gemini CLI
-npx @google/generative-ai
+gemini
 
-# Your workspace is persistent at
+# Your workspace (everything in /home/jon persists across rebuilds)
 cd ~/workspace
 ```
+
+## Session Persistence with tmux
+
+Use tmux to keep sessions running even when disconnected:
+
+```bash
+# Create named sessions
+tmux new -s claude
+tmux new -s gemini
+
+# Detach from session (keeps it running)
+Ctrl+b, then d
+
+# List sessions
+tmux ls
+
+# Reattach to session
+tmux attach -t claude
+tmux attach -t gemini
+```
+
+Your tmux sessions persist across SSH/Mosh reconnections - perfect for working across multiple devices!
 
 ## Configuration
 

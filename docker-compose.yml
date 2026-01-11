@@ -8,15 +8,13 @@ services:
     environment:
       - TZ=${TZ:-America/New_York}
     volumes:
+      # Persist entire home directory (configs, installs, workspace, etc.)
+      - remote-dev-home:/home/jon
       # SSH authorized_keys - mount your public key here
       - ${SSH_KEYS_PATH:-./ssh-keys/authorized_keys}:/home/jon/.ssh/authorized_keys:ro
-      # Persistent workspace
-      - ${WORKSPACE_PATH:-/mnt/user/appdata/remote-dev/workspace}:/home/jon/workspace
       # Optional: Mount additional Unraid shares
       # - /mnt/user/documents:/mnt/shares/documents:ro
       # - /mnt/user/media:/mnt/shares/media:ro
-      # API keys and configs (optional)
-      - ${CONFIG_PATH:-./config}:/home/jon/.config
     ports:
       # SSH
       - "${SSH_PORT:-2222}:22"
@@ -25,3 +23,6 @@ services:
     restart: unless-stopped
     cap_add:
       - NET_ADMIN
+
+volumes:
+  remote-dev-home:

@@ -62,9 +62,10 @@ WORKDIR /home/${USER_NAME}
 # Create workspace directory
 RUN mkdir -p /home/${USER_NAME}/workspace
 
-# Create setup script for first-time setup
+# Install AI tools during build
 COPY --chown=${USER_NAME}:${USER_NAME} setup-ai-tools.sh /home/${USER_NAME}/setup-ai-tools.sh
-RUN chmod +x /home/${USER_NAME}/setup-ai-tools.sh
+RUN chmod +x /home/${USER_NAME}/setup-ai-tools.sh && \
+    bash /home/${USER_NAME}/setup-ai-tools.sh
 
 # Add local bin to PATH for Claude Code
 ENV PATH="/home/${USER_NAME}/.local/bin:${PATH}"

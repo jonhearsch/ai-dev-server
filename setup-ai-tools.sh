@@ -15,16 +15,16 @@ if command -v claude &> /dev/null; then
     CLAUDE_INSTALLED=true
 else
     echo "Installing Claude Code..."
-    curl -fsSL https://claude.ai/install.sh | sh
+    curl -fsSL https://claude.ai/install.sh | bash
     echo "✓ Claude Code installed successfully"
 fi
 
-if command -v genai &> /dev/null || npm list -g @google/generative-ai &> /dev/null; then
+if command -v genai &> /dev/null || npm list -g @google/gemini-cli &> /dev/null; then
     echo "✓ Gemini CLI is already installed"
     GEMINI_INSTALLED=true
 else
     echo "Installing Gemini CLI..."
-    npm install -g @google/generative-ai
+    npm install -g @google/gemini-cli
     echo "✓ Gemini CLI installed successfully"
 fi
 
