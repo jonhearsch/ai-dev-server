@@ -55,17 +55,22 @@ RUN mkdir -p /home/${USER_NAME}/.ssh \
     && chown -R ${USER_NAME}:${USER_NAME} /home/${USER_NAME}/.ssh \
     && chmod 700 /home/${USER_NAME}/.ssh
 
-# Switch to user for installations
+# Install Gemini CLI globally (needs root)
+RUN npm install -g @google-labs/genai-cli
+
+# Switch to user for remaining setup
 USER ${USER_NAME}
 WORKDIR /home/${USER_NAME}
 
 # Create workspace directory
 RUN mkdir -p /home/${USER_NAME}/workspace
 
-# Install AI tools during build
+# Install Claude Code as user
+RUN curl -fsSL https://claude.ai/install.sh | bash || true
+
+# Keep setup script for manual re-runs if needed
 COPY --chown=${USER_NAME}:${USER_NAME} setup-ai-tools.sh /home/${USER_NAME}/setup-ai-tools.sh
-RUN chmod +x /home/${USER_NAME}/setup-ai-tools.sh && \
-    bash /home/${USER_NAME}/setup-ai-tools.sh
+RUN chmod +x /home/${USER_NAME}/setup-ai-tools.sh
 
 # Add local bin to PATH for Claude Code
 ENV PATH="/home/${USER_NAME}/.local/bin:${PATH}"
