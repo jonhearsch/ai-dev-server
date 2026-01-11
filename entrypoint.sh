@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+# Fix home directory permissions (SSH requires this)
+chmod 755 /home/jon
+chown jon:jon /home/jon
+
 # Ensure SSH directory exists with correct permissions
 mkdir -p /home/jon/.ssh
 chmod 700 /home/jon/.ssh
