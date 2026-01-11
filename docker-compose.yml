@@ -1,17 +1,8 @@
-version: '3.8'
+version: "3.8"
 
 services:
   remote-dev:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        USER_NAME: ${USER_NAME:-jon}
-        USER_UID: ${USER_UID:-1000}
-        USER_GID: ${USER_GID:-1000}
-    image: remote-dev:latest
-    container_name: remote-dev
-    hostname: remote-dev
+    image: ghcr.io/jonhearsch/ai-dev-server:latest
     environment:
       - TZ=${TZ:-America/New_York}
     volumes:
@@ -30,3 +21,5 @@ services:
       # Mosh UDP ports
       - "${MOSH_PORT_START:-60000}-${MOSH_PORT_END:-60010}:60000-60010/udp"
     restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
