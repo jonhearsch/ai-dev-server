@@ -10,8 +10,8 @@ services:
     volumes:
       # Persist entire home directory (configs, installs, workspace, etc.)
       - remote-dev-home:/home/jon
-      # SSH authorized_keys - mount your public key here
-      - ${SSH_KEYS_PATH:-./ssh-keys/authorized_keys}:/home/jon/.ssh/authorized_keys:ro
+      # SSH authorized_keys - mounted to staging location, copied by entrypoint
+      - ${SSH_KEYS_PATH:-./ssh-keys/authorized_keys}:/tmp/authorized_keys:ro
       # Optional: Mount additional Unraid shares
       # - /mnt/user/documents:/mnt/shares/documents:ro
       # - /mnt/user/media:/mnt/shares/media:ro
