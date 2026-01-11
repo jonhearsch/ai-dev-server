@@ -3,18 +3,20 @@ version: "3.8"
 services:
   remote-dev:
     image: ghcr.io/jonhearsch/ai-dev-server:latest
+    container_name: remote-dev
+    hostname: remote-dev
     environment:
       - TZ=${TZ:-America/New_York}
     volumes:
       # SSH authorized_keys - mount your public key here
-      - ${SSH_KEYS_PATH:-./ssh-keys/authorized_keys}:/home/${USER_NAME:-jon}/.ssh/authorized_keys:ro
+      - ${SSH_KEYS_PATH:-./ssh-keys/authorized_keys}:/home/jon/.ssh/authorized_keys:ro
       # Persistent workspace
-      - ${WORKSPACE_PATH:-/mnt/user/appdata/remote-dev/workspace}:/home/${USER_NAME:-jon}/workspace
+      - ${WORKSPACE_PATH:-/mnt/user/appdata/remote-dev/workspace}:/home/jon/workspace
       # Optional: Mount additional Unraid shares
       # - /mnt/user/documents:/mnt/shares/documents:ro
       # - /mnt/user/media:/mnt/shares/media:ro
       # API keys and configs (optional)
-      - ${CONFIG_PATH:-./config}:/home/${USER_NAME:-jon}/.config
+      - ${CONFIG_PATH:-./config}:/home/jon/.config
     ports:
       # SSH
       - "${SSH_PORT:-2222}:22"
