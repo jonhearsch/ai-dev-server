@@ -1,4 +1,4 @@
-FROM node:20-jammy
+FROM node:20-bookworm
 
 # Avoid interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
