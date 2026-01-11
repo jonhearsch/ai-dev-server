@@ -33,8 +33,9 @@ ENV LC_ALL=en_US.UTF-8
 RUN npm install -g @anthropic-ai/claude-code@latest \
     && npm install -g @google/gemini-cli@latest
 
-# Create user with sudo privileges
-RUN groupadd -g ${USER_GID} ${USER_NAME} \
+# Create user with sudo privileges (remove existing node user first)
+RUN userdel -r node 2>/dev/null || true \
+    && groupadd -g ${USER_GID} ${USER_NAME} 2>/dev/null || true \
     && useradd -m -u ${USER_UID} -g ${USER_GID} -s /bin/bash ${USER_NAME} \
     && echo "${USER_NAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
