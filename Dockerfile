@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM node:20-jammy
 
 # Avoid interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
@@ -12,19 +12,14 @@ ARG USER_UID=1000
 ARG USER_GID=1000
 
 # Install base packages
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     openssh-server \
     mosh \
     sudo \
-    curl \
-    wget \
     git \
     vim \
     nano \
     tmux \
-    ca-certificates \
-    gnupg \
-    lsb-release \
     locales \
     && rm -rf /var/lib/apt/lists/*
 
@@ -34,11 +29,8 @@ ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US:en
 ENV LC_ALL=en_US.UTF-8
 
-# Install Node.js and AI tools
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt-get install -y nodejs \
-    && rm -rf /var/lib/apt/lists/* \
-    && npm install -g @anthropic-ai/claude-code@latest \
+# Install AI CLI tools
+RUN npm install -g @anthropic-ai/claude-code@latest \
     && npm install -g @google/gemini-cli@latest
 
 # Create user with sudo privileges
