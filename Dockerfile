@@ -34,10 +34,12 @@ ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US:en
 ENV LC_ALL=en_US.UTF-8
 
-# Install Node.js (required for Gemini CLI)
+# Install Node.js and AI tools
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && npm install -g @anthropic-ai/claude-code@latest \
+    && npm install -g @google-labs/genai-cli@latest
 
 # Create user with sudo privileges
 RUN groupadd -g ${USER_GID} ${USER_NAME} \
