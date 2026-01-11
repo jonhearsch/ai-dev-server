@@ -59,16 +59,14 @@ RUN mkdir -p /home/${USER_NAME}/.ssh \
 USER ${USER_NAME}
 WORKDIR /home/${USER_NAME}
 
-# Install Claude Code
-RUN curl -fsSL https://claude.ai/install.sh | sh
-
-# Install Gemini CLI (Google AI Studio)
-RUN npm install -g @google/generative-ai
-
 # Create workspace directory
 RUN mkdir -p /home/${USER_NAME}/workspace
 
-# Add Claude Code to PATH
+# Create setup script for first-time setup
+COPY --chown=${USER_NAME}:${USER_NAME} setup-ai-tools.sh /home/${USER_NAME}/setup-ai-tools.sh
+RUN chmod +x /home/${USER_NAME}/setup-ai-tools.sh
+
+# Add local bin to PATH for Claude Code
 ENV PATH="/home/${USER_NAME}/.local/bin:${PATH}"
 
 # Switch back to root for startup
