@@ -39,7 +39,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/* \
     && npm install -g @anthropic-ai/claude-code@latest \
-    && npm install -g @google-labs/genai-cli@latest
+    && npm install -g @google/gemini-cli@latest
 
 # Create user with sudo privileges
 RUN groupadd -g ${USER_GID} ${USER_NAME} \

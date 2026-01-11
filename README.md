@@ -81,7 +81,7 @@ Claude Code and Gemini CLI are pre-installed and ready to use:
 claude
 
 # Gemini CLI
-genai
+gemini
 
 # Your workspace (everything in /home/jon persists across rebuilds)
 cd ~/workspace
@@ -94,7 +94,7 @@ Use tmux to keep sessions running even when disconnected:
 ```bash
 # Create named sessions
 tmux new -s claude
-tmux new -s genai
+tmux new -s gemini
 
 # Detach from session (keeps it running)
 Ctrl+b, then d
@@ -104,7 +104,7 @@ tmux ls
 
 # Reattach to session
 tmux attach -t claude
-tmux attach -t genai
+tmux attach -t gemini
 ```
 
 Your tmux sessions persist across SSH/Mosh reconnections - perfect for working across multiple devices!
