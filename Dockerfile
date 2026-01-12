@@ -57,6 +57,9 @@ WORKDIR /home/${USER_NAME}
 # Create workspace directory
 RUN mkdir -p /home/${USER_NAME}/workspace
 
+# Create .bash_profile to source .bashrc for login shells
+RUN echo 'if [ -f ~/.bashrc ]; then . ~/.bashrc; fi' > /home/${USER_NAME}/.bash_profile
+
 # Copy setup script for first-run
 COPY --chown=${USER_NAME}:${USER_NAME} setup-ai-tools.sh /home/${USER_NAME}/setup-ai-tools.sh
 RUN chmod +x /home/${USER_NAME}/setup-ai-tools.sh
